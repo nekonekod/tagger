@@ -1,0 +1,23 @@
+{
+  "name": "tagger",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "nekonekod <nekonekod.goo@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/nekonekod/tagger",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1"
+  }
+}

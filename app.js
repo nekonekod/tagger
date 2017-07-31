@@ -9,7 +9,7 @@ var mongoStore = require('connect-mongo')(session)
 var moment = require('moment')
 var port = process.env.PORT || 3002
 var app = express()
-var dbUrl = 'mongodb://localhost/movie_demo'
+var dbUrl = 'mongodb://localhost/tagger'
 
 app.set('views', './app/views/pages')
 app.set('view engine', 'jade')

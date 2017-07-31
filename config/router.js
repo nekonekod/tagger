@@ -1,8 +1,8 @@
-
+var TagFileController = require('../app/controllers/tag_file_controller')
 
 module.exports = function(app){
   app.get('/',function(req,res){
-    console.log('123')
-    res.render('index',{})
+    res.render('index')
   })
+  app.get('/resolve',TagFileController.resolve)
 }

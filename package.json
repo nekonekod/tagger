@@ -1,0 +1,34 @@
+{
+  "name": "tagger",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "electron"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nekonekod/tagger.git"
+  },
+  "author": "NekoD",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nekonekod/tagger/issues"
+  },
+  "homepage": "https://github.com/nekonekod/tagger#readme",
+  "devDependencies": {
+    "electron": "^1.6.11",
+    "eslint-config-google": "^0.9.1",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "gulp": "^3.9.1"
+  }
+}

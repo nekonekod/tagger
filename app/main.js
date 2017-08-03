@@ -13,15 +13,15 @@ function createWindow () {
   // 创建窗口
   mainWindow = new BrowserWindow({width: 800, height: 600})
 
+  // 打开开发人员工具
+  mainWindow.webContents.openDevTools()
+
   // 渲染 index.html界面
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'views/index.html'),
     protocol: 'file:',
     slashes: true,
   }))
-
-  // 打开开发人员工具
-  mainWindow.webContents.openDevTools()
 
   // 关闭窗口时调用
   mainWindow.on('closed', function () {
@@ -48,3 +48,4 @@ app.on('activate', function () {
     createWindow()
   }
 })
+

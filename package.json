@@ -5,7 +5,7 @@
   "main": "app/main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "package": "electron-packager . --platform=darwin --icon=./app/img/icon/icon.ico"
   },
   "keywords": [
     "nodejs",
@@ -23,6 +23,7 @@
   "homepage": "https://github.com/nekonekod/tagger#readme",
   "devDependencies": {
     "electron": "^1.6.11",
+    "electron-packager": "^8.7.2",
     "eslint-config-google": "^0.9.1",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.7.0",
@@ -30,5 +31,10 @@
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
     "gulp": "^3.9.1"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
+    "lowdb": "^0.16.2"
   }
 }

@@ -8,6 +8,9 @@ const url = require('url')
 
 // 保持一个全局的引用，以防被自动回收
 let mainWindow
+let PORT = process.env.PORT || 3004
+
+require('./web/server')(PORT)
 
 function createWindow () {
   // 创建窗口
@@ -17,11 +20,7 @@ function createWindow () {
   mainWindow.webContents.openDevTools()
 
   // 渲染 index.html界面
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'views/index.html'),
-    protocol: 'file:',
-    slashes: true,
-  }))
+  mainWindow.loadURL('http://127.0.0.1:' + PORT)
 
   // 关闭窗口时调用
   mainWindow.on('closed', function () {

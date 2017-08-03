@@ -6,11 +6,10 @@ let logger = require('morgan')
 let server = express()
 
 module.exports = function (PORT) {
-
   server.set('views', __dirname + '/views/pages')
   server.set('view engine', 'jade')
 
-// use body-parser to grab infor from POST
+  // use body-parser to grab infor from POST
   server.use(bodyParser.urlencoded({extended: true}))
   server.use(bodyParser.json())
   server.locals.moment = moment
@@ -23,9 +22,9 @@ module.exports = function (PORT) {
     server.locals.pretty = true
   }
 
-  require('./config/routes')(server)
+  require('./routes')(server)
   server.listen(PORT)
 
-  console.log('tagger server start on port ' + PORT)
+  console.log('server start on port ' + PORT)
 }
 

@@ -1,4 +1,4 @@
-let IndexController = require('../controller/index_controller')
+let IndexController = require('./controller/index_controller')
 
 module.exports = function(server) {
   //pre handle user

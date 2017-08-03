@@ -3,14 +3,12 @@ const app = electron.app
 // 创建窗口的模块
 const BrowserWindow = electron.BrowserWindow
 
-const path = require('path')
-const url = require('url')
-
 // 保持一个全局的引用，以防被自动回收
 let mainWindow
-let PORT = process.env.PORT || 3004
+let PORT = process.env.PORT || 3000
 
-require('./web/server')(PORT)
+//start server
+require('./server')(PORT)
 
 function createWindow () {
   // 创建窗口

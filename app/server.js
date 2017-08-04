@@ -5,7 +5,7 @@ let moment = require('moment')
 let logger = require('morgan')
 let server = express()
 
-module.exports = function (PORT) {
+module.exports = function (PORT,cb) {
   server.set('views', __dirname + '/views/pages')
   server.set('view engine', 'jade')
 
@@ -26,5 +26,7 @@ module.exports = function (PORT) {
   server.listen(PORT)
 
   console.log('server start on port ' + PORT)
+
+  !cb||cb()
 }
 

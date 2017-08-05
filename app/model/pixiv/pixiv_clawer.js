@@ -1,6 +1,6 @@
 let request = require('request')
 let cheerio = require('cheerio')
-let Pixiv = require('../pixiv')
+let Pixiv = require('./pixiv')
 
 let PixivClawer = {}
 
@@ -9,6 +9,7 @@ PixivClawer.claw = function (pixivId, cb) {
     if (err) {
       cb(err)
     } else {
+      //TODO R18 图 不登录无法获取tag
       let html = result.body
       let $ = cheerio.load(html)
       try {

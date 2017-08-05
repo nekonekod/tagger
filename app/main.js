@@ -20,9 +20,9 @@ let log = require('./util/log').getLogger()
 // 在electron初始化结束后悔调用，之后才能创建窗口以及使用一些API
 app.on('ready', function () {
   // checkPort(PORT)
-  require('./model/clawer/pixiv_clawer').claw('58133212', function (err, pixiv) {
+  require('./model/pixiv/pixiv_clawer').claw('61177911', function (err, illust) {
     if (err) log.error(err)
-    else pixiv.save()
+    else illust.save()
   })
 })
 

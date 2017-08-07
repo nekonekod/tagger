@@ -1,14 +1,10 @@
 const _ = require('underscore')
 
 let log = require('log4js').getLogger()
-let db = require('../../util/db').getDB('pixiv')
+let Illust = require('../illust')
+let Member = require('../member')
 
-db.defaults({
-  illust: [],
-  member: [],
-  tags: [],
-  tag_syn: []
-}).write()
+let dbIllust = require('../../util/db').getDB('illust')
 
 let Pixiv = {
   id: null,
@@ -25,41 +21,40 @@ Pixiv.newInstance = function (source) {
 // save to db
 Pixiv.save = function () {
   if (this.id) {
-    let ills = db.get('illust')
+    let ills = dbIllust.get('illust')
     let dupl = ills.find({id: this.id}).value()
     if (dupl) {
-      log.info('save error', 'duplication illust ', {id: dupl.id})
-      return
+      log.info('save error', 'duplication illust ', this, dupl)
+      return false
     }
-    //add illust to member
+    updateTags(this)
+    //TODO
     saveMember()
-    log.info('member saved/updated', {memberId: this.memberId})
-    //save tags TODO
-    replaceTags()
-    //save illust
-    ills.push(this).write()
-    log.info('illust saved', {id: this.id})
+    saveIllust()
+    return true
+  }
+  return false
+}
+
+function updateTags (pixiv) {
+
+}
+
+function saveMember () {
+  if (this.memberId && this.member) {
+    Member.static.addSyn(this.memberId, 'pixiv', this.member)
   }
 }
 
-//add member
-function saveMember () {
-  if (this.memberId) {
-    let memberId = this.memberId
-    let name = this.member
-    let mems = db.get('member')
-    let found = mems.find({memberId: memberId})
-    let member = found.value()
-    if (member) {
-      //将name加入到syn
-      if (member.syn.indexOf(name) < -1) {
-        member.syn.push(name)
-        found.assign({syn: member.syn}).write()
-      }
-    } else {
-      mems.push({memberId: memberId, name: name, syn: [name]}).write()
-    }
-  }
+function saveIllust () {
+  Illust.newInstance({
+    filename: this.id,
+    path: '',
+    id: this.id,
+    source: 'pixiv',
+    members: this.member,
+    tags: this.tags
+  }).save()
 }
 
 function replaceTags () {

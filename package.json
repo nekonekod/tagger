@@ -5,7 +5,7 @@
   "main": "app/main.js",
   "scripts": {
     "start": "electron .",
-    "package": "electron-packager . --platform=darwin --icon=./public/icon/icon.ico"
+    "package": "electron-packager . --platform=darwin --icon=./app/public/icon/icon.ico"
   },
   "keywords": [
     "nodejs",
@@ -30,9 +30,7 @@
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
-    "gulp": "^3.9.1",
-    "gulp-inject": "^4.2.0",
-    "gulp-jade": "^1.1.0"
+    "gulp": "^3.9.1"
   },
   "dependencies": {
     "bluebird": "^3.5.0",

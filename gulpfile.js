@@ -1,23 +1,7 @@
 // 获取依赖
-const gulp = require('gulp')
-const childProcess = require('child_process')
-const electron = require('electron')
-const jade = require('jade')
-const gulpJade = require('gulp-jade')
-
-let paths = {
-  app: 'app/**/*.js',
-  jade: 'app/views/*.jade'
-}
-
-gulp.task('jade', function () {
-  return gulp.src(paths.jade)
-    .pipe(gulpJade({
-      jade: jade,
-      pretty: true
-    }))
-    .pipe(gulp.dest('public'))
-})
+let gulp = require('gulp')
+let childProcess = require('child_process')
+let electron = require('electron')
 
 // 创建 gulp 任务
 gulp.task('run', function () {

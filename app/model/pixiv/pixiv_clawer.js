@@ -9,7 +9,7 @@ PixivClawer.claw = function (pixivId, cb) {
     if (err) {
       cb(err)
     } else {
-      //TODO R18 图 不登录无法获取tag
+      //TODO R 18 图 不登录无法获取tag
       let html = result.body
       let $ = cheerio.load(html)
       try {

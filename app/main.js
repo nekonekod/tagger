@@ -10,20 +10,16 @@ const ipcMain = electron.ipcMain
 // 保持一个全局的引用，以防被自动回收
 let mainWindow //主窗口
 let inputPortWindow //输入端口号窗口
-let PORT = process.env.PORT || 55834
+let PORT = process.env.PORT || 3000
 
 const path = require('path')
 const url = require('url')
 const net = require('net')
-let log = require('./util/log').getLogger()
+let log = require('./util/log').getLogger(__filename)
 
 // 在electron初始化结束后悔调用，之后才能创建窗口以及使用一些API
 app.on('ready', function () {
   checkPort(PORT)
-  // require('./model/pixiv/pixiv_clawer').claw('61177911', function (err, illust) {
-  //   if (err) log.error(err)
-  //   else illust.save()
-  // })
 })
 
 // Quit when all windows are closed.
@@ -85,7 +81,7 @@ function createWindow () {
   // 打开开发人员工具
   // mainWindow.webContents.openDevTools()
 
-  // 渲染 index.html界面
+  // 渲染 进入主页 界面
   mainWindow.loadURL('http://127.0.0.1:' + PORT)
 
   // 关闭窗口时调用

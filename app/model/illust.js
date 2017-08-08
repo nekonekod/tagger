@@ -1,6 +1,6 @@
 const _ = require('underscore')
 
-let log = require('log4js').getLogger()
+let log = require('log4js').getLogger(__filename)
 let db = require('../util/db').getDB('illust')
 
 db.defaults({
@@ -28,7 +28,7 @@ Illust.save = function () {
   if (this.path) {
     let ills = db.get('illust')
     //save illust
-    ills.push(this).write()
+    ills.push(_.omit(this,'static')).write()
     log.info('illust saved', this)
   }
 }

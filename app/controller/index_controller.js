@@ -1,4 +1,6 @@
+let log = require('../util/log').getLogger(__filename)
+
 exports.index = function (req, res) {
-  console.log('index_controller index')
+  log.info('index_controller index')
   res.render('index')
 }

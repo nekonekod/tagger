@@ -1,9 +1,9 @@
 const _ = require('underscore')
 
 let log = require('log4js').getLogger(__filename)
-let db = require('../util/db').getDB('member')
+let db = require('../util/db')
 
-db.defaults({
+db.getDB('member').defaults({
   member: []
 }).write()
 
@@ -20,8 +20,8 @@ Member.newInstance = function (source) {
 }
 
 Member.save = function () {
-  db.get('member')
-    .push(_.omit(this,'static'))
+  db.getCollection('member')
+    .push(_.omit(this, 'static'))
     .write()
   log.info('member saved', this)
 }
@@ -29,14 +29,14 @@ Member.save = function () {
 Member.static = {
   //先匹配(id,source)，再匹配name，在匹配syn,都无则新增
   addSyn: function (id, source, name) {
-    let collection = db.get('member')
+    let collection = db.getCollection('member')
     let found
     let member
     if (id && source) {
       //match (id,source)
       found = collection.find({id: id, source: source})
       if (member = found.value()) {
-        if (member.syn.indexOf(name)<0) {
+        if (member.syn.indexOf(name) < 0) {
           member.syn.push(name)
           found.write()
           log.info('member updated', member)
@@ -50,7 +50,7 @@ Member.static = {
       if (member = found.value()) {
         member.id = id
         member.source = source
-        if (!member.syn.contains(name)) {
+        if (member.syn.indexOf(name) < 0) {
           member.syn.push(name)
         }
         found.write()
@@ -58,7 +58,7 @@ Member.static = {
         return true
       }
       //match syn
-      found = collection.find((item, index) => item.syn.contains(name))
+      found = collection.find((item, index) => item.syn.indexOf(name) > -1)
       if (member = found.value()) {
         member.id = id
         member.source = source

@@ -1,0 +1,34 @@
+let log = require('../util/log').getLogger(__filename)
+let PixivClawer = require('../model/pixiv/pixiv_clawer')
+
+let clawers = new Map()
+clawers.set('pixiv', PixivClawer)
+
+exports.showClaw = function (req, res) {
+  log.info('claw_controller showClaw')
+  log.info(req.params.source)
+  res.render('claw')
+}
+
+function nameToId(name) {
+  log.info(name)
+  return name.split('.')[0].split('_')[0]
+}
+
+exports.getHandler = function (req, res) {
+  let key = req.path
+  let name = req.body.name
+  let path = req.body.path
+  let id = nameToId(name)
+  log.info('id:'+id)
+  PixivClawer.claw(id, (err, pixiv) => {
+    if (err) log.error(err)
+    else pixiv.saveWithFilenameAndPath(name, path)
+    writeJson(res, pixiv)
+  })
+}
+
+function writeJson(res, data) {
+  res.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'})
+  res.end(JSON.stringify(data))
+}

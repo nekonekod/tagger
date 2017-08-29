@@ -1,9 +1,9 @@
 const _ = require('underscore')
 
 let log = require('log4js').getLogger(__filename)
-let db = require('../util/db').getDB('illust')
+let db = require('../util/db')
 
-db.defaults({
+db.getDB('illust').defaults({
   illust: []
 }).write()
 
@@ -26,7 +26,7 @@ Illust.newInstance = function (source) {
 // save to db
 Illust.save = function () {
   if (this.path) {
-    let ills = db.get('illust')
+    let ills = db.getCollection('illust','illust')
     //save illust
     ills.push(_.omit(this,'static')).write()
     log.info('illust saved', this)

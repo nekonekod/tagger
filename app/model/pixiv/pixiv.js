@@ -5,7 +5,7 @@ let Illust = require('../illust')
 let Member = require('../member')
 let Tag = require('../tag')
 
-let dbIllust = require('../../util/db').getDB('illust')
+let db = require('../../util/db')
 
 let Pixiv = {
   id: null,
@@ -20,9 +20,9 @@ Pixiv.newInstance = function (source) {
 }
 
 // save to db
-Pixiv.saveWithFilenameAndPath = function (filename,path) {
+Pixiv.saveWithFilenameAndPath = function (filename, path) {
   if (this.id) {
-    let ills = dbIllust.get('illust')
+    let ills = db.getCollection('illust', 'illust')
     let dupl = ills.find({id: this.id}).value()
     if (dupl) {
       log.info('save error', 'duplication illust ', this, dupl)
@@ -30,23 +30,23 @@ Pixiv.saveWithFilenameAndPath = function (filename,path) {
     }
     updateTags()
     saveMember()
-    saveIllust(filename,path)
+    saveIllust(filename, path)
     return true
   }
   return false
 }
 
-function updateTags () {
+function updateTags() {
   Pixiv.tags = Tag.static.resolveTags(Pixiv.tags)
 }
 
-function saveMember () {
+function saveMember() {
   if (Pixiv.memberId && Pixiv.member) {
     Member.static.addSyn(Pixiv.memberId, 'pixiv', Pixiv.member)
   }
 }
 
-function saveIllust (filename,path) {
+function saveIllust(filename, path) {
   Illust.newInstance({
     filename: filename,
     path: path,

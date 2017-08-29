@@ -15,6 +15,11 @@ module.exports = function (PORT,cb) {
   server.locals.moment = moment
 
   server.use(express.static(path.join(__dirname, 'public')))
+  //
+  // server.use('*', function(request, response, next) {
+  //   response.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
+  //   return next();
+  // })
 
   if ('development' === server.get('env')) {
     server.set('showStackErr', true)

@@ -1,9 +1,9 @@
 const _ = require('underscore')
 
 let log = require('log4js').getLogger(__filename)
-let db = require('../util/db').getDB('tag')
+let db = require('../util/db')
 
-db.defaults({
+db.getDB('tag').defaults({
   tag: []
 }).write()
 
@@ -18,7 +18,7 @@ Tag.newInstance = function (source) {
 }
 
 Tag.save = function () {
-  db.get('tag').push(_.omit(this,'static')).write()
+  db.getCollection('tag').push(_.omit(this,'static')).write()
   log.info('tag saved')
 }
 
@@ -32,7 +32,7 @@ Tag.static = {
     return Array.from(tagSet)
   },
   getByNameOrSyn: function (name) {
-    let collection = db.get('tag')
+    let collection = db.getCollection('tag')
     let found
     let tag
     found = collection.find({name: name})

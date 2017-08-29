@@ -39,7 +39,7 @@ app.on('activate', function () {
 })
 
 //检测端口是否被占用
-function checkPort (port) {
+function checkPort(port) {
   // 尝试创建服务并监听该端口
   const server = net.createServer().listen(port)
   server.on('listening', function () { // 执行这块代码说明端口未被占用
@@ -58,7 +58,6 @@ function checkPort (port) {
         protocol: 'file:',
         slashes: true,
       }))
-      // portInput.webContents.openDevTools()
       inputPortWindow.on('closed', function () {
         mainWindow = null
       })
@@ -69,20 +68,19 @@ function checkPort (port) {
 }
 
 //start server
-function startServer (port) {
+function startServer(port) {
   require('./server')(port, createWindow)
 }
 
 //创建窗口
-function createWindow () {
+function createWindow() {
   // 创建窗口
   mainWindow = new BrowserWindow({width: 800, height: 600})
 
-  // 打开开发人员工具
-  // mainWindow.webContents.openDevTools()
-
   // 渲染 进入主页 界面
   mainWindow.loadURL('http://127.0.0.1:' + PORT)
+
+  openDevTools()
 
   // 关闭窗口时调用
   mainWindow.on('closed', function () {
@@ -91,9 +89,17 @@ function createWindow () {
   })
 }
 
-ipcMain.on('set-new-port', function (event, arg) {
+ipcMain.on('set-new-port', (event, arg) => {
   mainWindow = null
   inputPortWindow = null
   PORT = arg
   checkPort(arg)
 })
+
+ipcMain.on('open-dev-tools', (e, args) => openDevTools())
+
+function openDevTools() {
+  // 打开开发人员工具
+  mainWindow.webContents.openDevTools()
+}
+

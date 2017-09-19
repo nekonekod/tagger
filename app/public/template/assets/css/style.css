@@ -237,6 +237,11 @@ ul.top-menu > li > .logout {
     background: #424a5d;
 }
 
+.sidebar-right {
+    right: 0;
+    width: 300px !important;
+}
+
 #sidebar h5 {
     color: #f2f2f2;
     font-weight: 700;
@@ -400,6 +405,7 @@ ul.sidebar-menu li a.active i {
 /* MAIN CONTENT CONFIGURATION */
 #main-content {
     margin-left: 210px;
+    margin-right: 300px;
 }
 
 .header, .footer {
@@ -424,7 +430,8 @@ ul.sidebar-menu li a.active i {
     margin-top: 60px;
     padding-left: 15px;
     padding-right: 15px;
-    padding-bottom: 15px;
+    padding-bottom: 0;
+    margin-bottom: -5px;
     padding-top: 0px;
     width: 100%;
 }

@@ -11,6 +11,9 @@ const path = require('path')
 const url = require('url')
 const net = require('net')
 
+let fsListener = require('./util/fs_listener')
+
+fsListener.watch('/Users/nekod/Downloads')
 
 // 保持一个全局的引用，以防被自动回收
 let mainWindow //主窗口
@@ -44,8 +47,8 @@ function createWindow() {
 
   // 渲染 进入主页 界面
   mainWindow.loadURL(url.format({
-    // pathname: path.join(__dirname, 'public/message.html'),
-    pathname: path.join(__dirname, 'public/template/index.html'),
+    pathname: path.join(__dirname, 'public/find_img.html'),
+    // pathname: path.join(__dirname, 'public/template/index.html'),
     protocol: 'file:',
     slashes: true,
   }))
@@ -66,4 +69,4 @@ function openDevTools() {
   mainWindow.webContents.openDevTools()
 }
 
-require('./controller/test_controller')
+require('./controller/router')

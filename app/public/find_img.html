@@ -10,10 +10,6 @@
 <body>
 
 <form>
-  <label>Channel
-    <input id="channelIpt" value="fslistener/filterByName">
-  </label>
-  <br>
   <label>Param
     <input id="paramTxt" value="111" />
   </label>
@@ -23,5 +19,18 @@
   <input id="submitBtn" type="button" value="submit"/>
 </form>
 </body>
-<script src="message.js"></script>
+<script>
+  let ipcRenderer = require('../util/my_ipc_renderer')
+
+  function send() {
+    let channel = 'fslistener/filterByName';
+    let param = document.getElementById('paramTxt').value;
+    let pre = document.getElementById('resultPre');
+    ipcRenderer.send(channel, param, function (data) {
+      pre.innerHTML = JSON.stringify(data,undefined,2);
+    })
+  }
+
+  document.getElementById('submitBtn').addEventListener('click',send)
+</script>
 </html>

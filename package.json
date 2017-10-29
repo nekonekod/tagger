@@ -23,6 +23,7 @@
   "homepage": "https://github.com/nekonekod/tagger#readme",
   "devDependencies": {
     "electron": "^1.6.11",
+    "electron-connect": "^0.6.2",
     "electron-packager": "^8.7.2",
     "eslint-config-google": "^0.9.1",
     "eslint-config-standard": "^10.2.1",
@@ -45,6 +46,6 @@
     "morgan": "^1.8.2",
     "request": "^2.81.0",
     "underscore": "^1.8.3",
-    "vue": "^2.4.4"
+    "vue": "^2.5.2"
   }
 }

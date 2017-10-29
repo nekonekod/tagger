@@ -1,36 +1,74 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
 <body>
 
-<form>
-  <label>Param
-    <input id="paramTxt" value="111" />
-  </label>
-  <br>
-  <pre id="resultPre"></pre>
-  <br>
-  <input id="submitBtn" type="button" value="submit"/>
+<form id="find-img">
+    <div>
+        <h3>{{title}}</h3>
+        <ul>
+            <li v-for="dir in watching">
+                {{ dir }}
+            </li>
+            <li>
+                <label>Param
+                    <input v-model="newDir" @input="change"/>
+                </label>
+                <input type="button" value="add" @click="addWatching">
+            </li>
+        </ul>
+    </div>
+    <br>
+    <div>
+        <label>Key:
+            <input v-model="key"/>
+        </label>
+        <input type="button" value="search" @click="search"/>
+        <ul>
+            <li v-for="file in result">
+                {{file}}
+            </li>
+        </ul>
+    </div>
 </form>
 </body>
+<script src="https://unpkg.com/vue"></script>
 <script>
   let ipcRenderer = require('../util/my_ipc_renderer')
+  let app = new Vue({
+    el: '#find-img',
+    data: {
+      title: 'watching folders:',
+      newDir: 'newDir',
+      watching: [],
+      key:'key',
+      result:[],
+    },
+    methods: {
+      change:function(){
+        console.log(this.newDir)
+      },
+      addWatching: function () {
+        let channel = 'fslistener/watch/bind'
+        ipcRenderer.send(channel, this.newDir, (data) => {
+          console.log(data)
+        })
+      },
+      search:  function () {
+        let channel = 'fslistener/search';
+        ipcRenderer.send(channel, this.key, (data) => {
+          console.log(data)
+          this.result = data
+        })
+      }
+    }
+  })
 
-  function send() {
-    let channel = 'fslistener/filterByName';
-    let param = document.getElementById('paramTxt').value;
-    let pre = document.getElementById('resultPre');
-    ipcRenderer.send(channel, param, function (data) {
-      pre.innerHTML = JSON.stringify(data,undefined,2);
-    })
-  }
-
-  document.getElementById('submitBtn').addEventListener('click',send)
 </script>
 </html>

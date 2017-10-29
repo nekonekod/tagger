@@ -11,9 +11,6 @@ const path = require('path')
 const url = require('url')
 const net = require('net')
 
-let fsListener = require('./util/fs_listener')
-
-fsListener.watch('/Users/nekod/Downloads')
 
 // 保持一个全局的引用，以防被自动回收
 let mainWindow //主窗口

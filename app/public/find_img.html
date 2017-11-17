@@ -38,16 +38,16 @@
     </div>
 </form>
 </body>
-<script src="https://unpkg.com/vue"></script>
+<script src="script/vue-2.5.4.js"></script>
 <script>
   let ipcRenderer = require('../util/my_ipc_renderer')
   let app = new Vue({
     el: '#find-img',
     data: {
       title: 'watching folders:',
-      newDir: 'newDir',
+      newDir: '/Users/nekod/Pictures',
       watching: [],
-      key:'key',
+      key:'時雨',
       result:[],
     },
     methods: {
@@ -61,7 +61,7 @@
         })
       },
       search:  function () {
-        let channel = 'fslistener/search';
+        let channel = 'img/search';
         ipcRenderer.send(channel, this.key, (data) => {
           console.log(data)
           this.result = data

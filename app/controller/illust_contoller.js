@@ -1,33 +1,13 @@
 let pixivClawer = require('../model/pixiv/pixiv_clawer')
+let fsListener = require('../util/fs_listener')
+let path = require('path')
+
+const low = require('lowdb')
+let db = low(path.join(__dirname, '../data/2017-10-29.json'))
+
 
 exports.illust = function (param, send) {
-  let res = [
-    {
-      id: '61431282',
-      member: '太もも',
-      memberId: '8413186',
-      tags:
-        ['插畫']
-    }, {
-      id: '61431282',
-      member: '大腿外側(太もも',
-      memberId: '8413186',
-      tags:
-        [
-          '艦これかわいい',
-          '艦娘',
-          '艦これ100users入り']
-    }, {
-      id: '61431282',
-      member: '大腿外側(太もも',
-      memberId: '8413186',
-      tags:
-        [
-          '少女',
-          '艦これ',
-          '艦隊これくしょん',
-          '如月(艦隊これくしょん)']
-    }]
+  let res = db.get('pixiv').value()
   send(res)
 }
 
@@ -36,4 +16,18 @@ exports.clawPixiv = function (param, send, event) {
     .then((data) => {
       send(data)
     })
+}
+
+exports.search = (param, send, event) => {
+  let ids = db.get('pixiv')
+    .filter((it) => {
+      return it.tags.indexOf(param) > -1
+    })
+    .map((it) => {
+      return it.id
+    })
+    .value()
+  console.log(ids)
+  let res = fsListener.getFilesLikeName(ids)
+  send(res)
 }

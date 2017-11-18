@@ -4,7 +4,7 @@ const path = require('path')
 const {shell} = require('electron')
 
 const low = require('lowdb')
-let db = low(path.join(__dirname, '../data/2017-10-29.json'))
+let db = low(path.join(__dirname, '../data/pixivs.json'))
 
 
 exports.illust = function (param, send) {
@@ -15,6 +15,11 @@ exports.illust = function (param, send) {
 
 exports.open = (param,send) => {
   shell.openItem(param)
+  send({status:'1'})
+}
+
+exports.findInExplore = (param,send) => {
+  shell.showItemInFolder(param)
   send({status:'1'})
 }
 
@@ -38,3 +43,4 @@ exports.search = (param, send, event) => {
   let res = fsListener.getFilesLikeName(ids)
   send(res)
 }
+

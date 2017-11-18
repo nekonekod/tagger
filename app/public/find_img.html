@@ -31,8 +31,8 @@
         </label>
         <input type="button" value="search" @click="search"/>
         <ul>
-            <li v-for="file in result" @click="openItem">
-                <a href="##">{{file}}</a>
+            <li v-for="file in result">
+                <span>{{file}}</span> <a href="##" @click="openItem(file)">打开文件</a>  <a href="##" @click="findInExplore(file)">打开所在文件夹</a>
             </li>
         </ul>
     </div>
@@ -68,10 +68,13 @@
           this.result = data
         })
       },
-      openItem: function(e){
+      openItem: function(filePath){
         let channel = 'img/open'
-        let itemPath = e.target.innerText
-        ipcRenderer.send(channel,itemPath,(data) => {})
+        ipcRenderer.send(channel,filePath,(data) => {})
+      },
+      findInExplore:function(filePath){
+        let channel = 'img/explore'
+        ipcRenderer.send(channel,filePath,(data) => {})
       }
     }
   })

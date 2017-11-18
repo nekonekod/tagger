@@ -1,6 +1,7 @@
 let pixivClawer = require('../model/pixiv/pixiv_clawer')
 let fsListener = require('../util/fs_listener')
-let path = require('path')
+const path = require('path')
+const {shell} = require('electron')
 
 const low = require('lowdb')
 let db = low(path.join(__dirname, '../data/2017-10-29.json'))
@@ -9,6 +10,12 @@ let db = low(path.join(__dirname, '../data/2017-10-29.json'))
 exports.illust = function (param, send) {
   let res = db.get('pixiv').value()
   send(res)
+}
+
+
+exports.open = (param,send) => {
+  shell.openItem(param)
+  send({status:'1'})
 }
 
 exports.clawPixiv = function (param, send, event) {

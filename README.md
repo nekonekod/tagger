@@ -1,4 +1,4 @@
-# learn-electron-vue
+# Tagger
 
 > An electron-vue project
 

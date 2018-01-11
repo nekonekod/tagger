@@ -58,4 +58,12 @@ typings/
 .env
 
 .idea/
+
 .vscode/launch.json
+.DS_Store
+dist/electron/*
+dist/web/*
+build/*
+!build/icons
+thumbs.db
+!.gitkeep

@@ -40,6 +40,11 @@
 
 <script>
   import SystemInformation from './LandingPage/SystemInformation'
+  import ipcR from '../common/ipcR'
+
+  ipcR.recieve('fs/watch/watchedDirs',(data)=>{
+    console.log(data)
+  })
 
   function buildQueryParam(keyword){
     return {
@@ -64,23 +69,13 @@
         this.$electron.shell.openExternal(link)
       },
       register (){
-        this.$http.post('/fs/watch/register',{
-          path:this.dirPath
-        })
-        .then(response => {
-            // success callback
-            this.watched = response.data.data
-            console.log(this.watched)
+        ipcR.send('fs/watch/register',this.dirPath,(data)=>{
+          console.log('register',data)
         })
       },
       unregister (){
-        this.$http.post('/fs/watch/unregister',{
-          path:this.dirPath
-        })
-        .then(response => {
-            // success callback
-            console.log(response.data)
-            this.watched = response.data.data
+        ipcR.send('fs/watch/unregister',this.dirPath,(data)=>{
+          console.log('unregister',data)
         })
       },
       query (){

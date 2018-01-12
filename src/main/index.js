@@ -1,4 +1,8 @@
-import { app, BrowserWindow } from 'electron'
+import {
+  app,
+  BrowserWindow
+} from 'electron'
+import fawatcher from './common/fswatcher'
 
 /**
  * Set `__static` path to static files in production
@@ -8,12 +12,14 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
-let mainWindow
-const winURL = process.env.NODE_ENV === 'development'
-  ? `http://localhost:9080`
-  : `file://${__dirname}/index.html`
+global.storage = {}
 
-function createWindow () {
+let mainWindow
+const winURL = process.env.NODE_ENV === 'development' ?
+  `http://localhost:9080` :
+  `file://${__dirname}/index.html`
+
+function createWindow() {
   /**
    * Initial window options
    */
@@ -28,6 +34,8 @@ function createWindow () {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
+  global.storage.mainWindow = mainWindow
 }
 
 app.on('ready', createWindow)

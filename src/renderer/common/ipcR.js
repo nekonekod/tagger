@@ -7,13 +7,17 @@ var log = console.log.bind(console)
 
 export default {
     send(channel, params, callback) {
-        let seq = uuid()
+        if (typeof params === 'function') {
+            callback = params
+            params = {}
+        }
+        let seq = uuid().substr(0,8)
         ipcRenderer.send(channel, {
             seq: seq,
             arg: params
         })
-        log('ipcR.send', channel, seq, params)
         ipcRenderer.once(channel + '#reply#' + seq, function (event, data) {
+            log('*** ipcR.send', channel, seq, ' ***', params, data)
             callback && callback(data, event)
         })
     },

@@ -3,6 +3,7 @@ import {
   BrowserWindow
 } from 'electron'
 import fawatcher from './common/fswatcher'
+import ipcMapping from './service/ipcMapping'
 
 /**
  * Set `__static` path to static files in production

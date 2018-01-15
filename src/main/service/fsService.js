@@ -12,5 +12,11 @@ export default {
         send({
             status: 1
         })
+    },
+    watchedDirs(param, send){
+        send({
+            data:fswatcher.watchedDirs(),
+            status: 1
+        })
     }
 }

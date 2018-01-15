@@ -9,17 +9,25 @@
         <br>
         <div class="doc">
           <div class="title">Detail</div>
-          <pre v-html="tFileInfo"></pre>
+          <pre v-html="watched"></pre>
         </div>
       </div>
 
       <div class="right-side">
         <div class="doc">
+          <div class="title">Import Pixiv</div>
+          <input v-model="pixivRawPath" @keyup.enter="importPixivRaw"/>
+          <br>
+          <button @click="importPixivRaw">Import</button>
+          <br><br>
+        </div>
+        <div class="doc">
           <div class="title" :title="watched">Watched</div>
           <input v-model="dirPath" @keyup.enter="register"/>
           <br>
           <button @click="register">Register</button>
-          <button @click="unregister">Unregister</button>
+          <!-- <button @click="unregister">Unregister</button> -->
+          <button @click="watchedDirs">WatchedDirs</button>
           <br><br>
         </div>
         <div class="doc">
@@ -42,10 +50,6 @@
   import SystemInformation from './LandingPage/SystemInformation'
   import ipcR from '../common/ipcR'
 
-  ipcR.recieve('fs/watch/watchedDirs',(data)=>{
-    console.log(data)
-  })
-
   function buildQueryParam(keyword){
     return {
       tags:keyword.split(' ')
@@ -57,25 +61,41 @@
     components: { SystemInformation },
     data (){
       return {
-        dirPath:'/Users/nekod/Pictures',
+        pixivRawPath:'/Users/nekod/Downloads/raw/test.json',
+        dirPath:'/Users/nekod/Pictures/pixiv',
         keyword:'',
         watched:[],
         tFiles:[],
         tFileInfo:{}
       }
     } ,
+    mounted:function() {
+      ipcR.recieve('fs/watch/watchedDirs',(data)=>{
+        this.watched = data.data
+      })
+    },
     methods: {
       open (link) {
         this.$electron.shell.openExternal(link)
       },
+      importPixivRaw(){
+        ipcR.send('import/pixiv',{path:this.pixivRawPath},(data)=>{
+          // console.log('importPixivRaw',data)
+        })
+      },
       register (){
-        ipcR.send('fs/watch/register',this.dirPath,(data)=>{
+        ipcR.send('fs/watch/register',{ path: this.dirPath },(data)=>{
           console.log('register',data)
         })
       },
-      unregister (){
-        ipcR.send('fs/watch/unregister',this.dirPath,(data)=>{
-          console.log('unregister',data)
+      // unregister (){
+      //   ipcR.send('fs/watch/unregister',{ path: this.dirPath },(data)=>{
+      //     console.log('unregister',data)
+      //   })
+      // },
+      watchedDirs(){
+        ipcR.send('fs/watch/watchedDirs',(data)=>{
+          this.watched = data.data
         })
       },
       query (){

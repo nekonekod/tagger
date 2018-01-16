@@ -6,9 +6,11 @@ var log = console.log.bind(console)
 
 export default {
     on: function (channel, handler) {
+        let st = Date.now()
         ipcMain.on(channel, function (event, params) {
             let send = function (data) {
-                log('ipcM.on', channel, params.seq, params.arg, data)
+                let cost = (Date.now() - st) + ' ms'
+                log('** iipcM.on', channel, params.seq, '*', cost, params.arg, data)
                 event.sender.send(channel + '#reply#' + params.seq, data)
             }
             handler && handler(params.arg, send, event)

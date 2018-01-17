@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: 'learn-electron-vue'
+    name: 'tagger'
   }
 </script>
 

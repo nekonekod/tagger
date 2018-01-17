@@ -3,6 +3,7 @@ import async from 'async'
 import uuid from 'uuid/v1'
 
 import tagService from './tagService'
+import illustService from './illustService'
 
 const source = 'pixiv'
 const limit = 5
@@ -15,6 +16,7 @@ function parse(json) {
         let models = holder.pixiv
         async.mapLimit(models, limit, doParse, function (err, results) {
             console.log(err, results)
+            illustService.save(results)
         })
     }
 }
@@ -22,7 +24,7 @@ function parse(json) {
 function doParse(rawModel, callback) {
     if (cleanDirty) cleanDirtyRaw(rawModel)
     let illust = {
-        id: uuid(),
+        _id: uuid(),
         source: source,
         sourceId: rawModel.id,
         author: rawModel.author,

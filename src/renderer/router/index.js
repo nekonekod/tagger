@@ -7,14 +7,14 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'tagger-index',
+      name: 'ipc test',
+      component: require('@/components/IpcTest').default
+    },
+    {
+      path: '/tagger-index',
+      name: 'tagger index',
       component: require('@/components/TaggerIndex').default
     },
-    // {
-    //   path: '/',
-    //   name: 'landing-page',
-    //   component: require('@/components/LandingPage').default
-    // },
     {
       path: '*',
       redirect: '/'

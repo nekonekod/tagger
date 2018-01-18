@@ -31,13 +31,13 @@
     data (){
       return {
         channel:'illust/getById',
-        param:'{"id":"4f2549b0-fa9e-11e7-9b11-69cc962e1dfe"}',
+        param:'{"id":"e1d3fde1-fc1c-11e7-a134-058f5b4138ee"}',
         data:''
       }
     },
     methods: {
       send(){
-        ipcR.send(this.channel,this.param,(data)=>{
+        ipcR.send(this.channel,JSON.parse(this.param),(data)=>{
           this.data = data
         })
       }

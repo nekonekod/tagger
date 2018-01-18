@@ -50,42 +50,42 @@
   import SystemInformation from './LandingPage/SystemInformation'
   import ipcR from '../common/ipcR'
 
-  function buildQueryParam(keyword){
+  function buildQueryParam(keyword) {
     return {
-      tags:keyword.split(' ')
+      tags: keyword.split(' ')
     }
   }
 
   export default {
     name: 'landing-page',
-    components: { SystemInformation },
-    data (){
+    components: {SystemInformation},
+    data() {
       return {
-        pixivRawPath:'/Users/nekod/Downloads/raw/test.json',
-        dirPath:'/Users/nekod/Pictures/pixiv',
-        keyword:'',
-        watched:[],
-        tFiles:[],
-        tFileInfo:{}
+        pixivRawPath: '/Users/nekod/Downloads/raw/test.json',
+        dirPath: '/Users/nekod/Pictures/pixiv',
+        keyword: '',
+        watched: [],
+        tFiles: [],
+        tFileInfo: {}
       }
-    } ,
-    mounted:function() {
-      ipcR.recieve('fs/watch/watchedDirs',(data)=>{
+    },
+    mounted: function () {
+      ipcR.recieve('fs/watch/watchedDirs', (data) => {
         this.watched = data.data
       })
     },
     methods: {
-      open (link) {
+      open(link) {
         this.$electron.shell.openExternal(link)
       },
-      importPixivRaw(){
-        ipcR.send('import/pixiv',{path:this.pixivRawPath},(data)=>{
+      importPixivRaw() {
+        ipcR.send('import/pixiv', {path: this.pixivRawPath}, (data) => {
           // console.log('importPixivRaw',data)
         })
       },
-      register (){
-        ipcR.send('fs/watch/register',{ path: this.dirPath },(data)=>{
-          console.log('register',data)
+      register() {
+        ipcR.send('fs/watch/register', {path: this.dirPath}, (data) => {
+          console.log('register', data)
         })
       },
       // unregister (){
@@ -93,23 +93,23 @@
       //     console.log('unregister',data)
       //   })
       // },
-      watchedDirs(){
-        ipcR.send('fs/watch/watchedDirs',(data)=>{
+      watchedDirs() {
+        ipcR.send('fs/watch/watchedDirs', (data) => {
           this.watched = data.data
         })
       },
-      query (){
-        this.$http.post('/tfile/query',buildQueryParam(this.keyword))
-        .then(response => {
+      query() {
+        this.$http.post('/tfile/query', buildQueryParam(this.keyword))
+          .then(response => {
             // success callback
             console.log(response.data)
             this.tFiles = response.data.data
-        }, response => {
+          }, response => {
             // error callback
             console.error(response)
-        })
+          })
       },
-      detail(index){
+      detail(index) {
         this.tFileInfo = this.tFiles[index]
         console.log(this.tFileInfo)
       }
@@ -126,15 +126,16 @@
     padding: 0;
   }
 
-  body { font-family: 'Source Sans Pro', sans-serif; }
+  body {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
 
   #wrapper {
-    background:
-      radial-gradient(
+    background: radial-gradient(
         ellipse at top left,
         rgba(255, 255, 255, 1) 40%,
         rgba(229, 229, 229, .9) 100%
-      );
+    );
     height: 100vh;
     padding: 60px 80px;
     width: 100vw;
@@ -151,7 +152,9 @@
     justify-content: space-between;
   }
 
-  main > div { flex-basis: 50%; }
+  main > div {
+    flex-basis: 50%;
+  }
 
   .left-side {
     display: flex;
@@ -180,20 +183,21 @@
     color: black;
     margin-bottom: 10px;
   }
-/* 
-  .doc button {
-    font-size: .8em;
-    cursor: pointer;
-    outline: none;
-    padding: 0.75em 2em;
-    border-radius: 2em;
-    display: inline-block;
-    color: #fff;
-    background-color: #4fc08d;
-    transition: all 0.15s ease;
-    box-sizing: border-box;
-    border: 1px solid #4fc08d;
-  } */
+
+  /*
+    .doc button {
+      font-size: .8em;
+      cursor: pointer;
+      outline: none;
+      padding: 0.75em 2em;
+      border-radius: 2em;
+      display: inline-block;
+      color: #fff;
+      background-color: #4fc08d;
+      transition: all 0.15s ease;
+      box-sizing: border-box;
+      border: 1px solid #4fc08d;
+    } */
 
   .doc button.alt {
     color: #42b983;
@@ -202,6 +206,6 @@
 
   pre {
     width: 30vw;
-    overflow:scroll;
+    overflow: scroll;
   }
 </style>

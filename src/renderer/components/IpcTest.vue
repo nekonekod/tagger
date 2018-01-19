@@ -30,8 +30,8 @@
     name: 'landing-page',
     data (){
       return {
-        channel:'illust/getById',
-        param:'{"id":"e1d3fde1-fc1c-11e7-a134-058f5b4138ee"}',
+        channel:'pixiv/rename',
+        param:'{"dir":"/Users/nekod/Downloads/test/facades","dupDir":"/Users/nekod/Downloads/test/dup"}',
         data:''
       }
     },

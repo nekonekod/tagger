@@ -33,5 +33,25 @@ export default {
       .value()
     let tagStr = distincted.length < 1 ? null : separator + distincted.join(separator) + separator
     return tagStr
+  },
+  /**
+   * 对tag数组进行非空过滤，忽略，重映射，去重操作
+   * @param arr 原tag数组
+   */
+  updateTags(arr){
+    let reMap = reMapTags()
+    let ignore = ignoreTags()
+
+    return _.chain(arr).map(t => { //do map and ignore
+      let f = null
+      if (t && t.trim() !== '') {
+        t = t.trim()
+        let mepped = reMap.get(t)
+        f = mepped ? mepped : (ignore.has(t) ? null : t)
+      }
+      return f
+    }).filter(t => t && t.trim() !== '')
+      .uniq()
+      .value()
   }
 }

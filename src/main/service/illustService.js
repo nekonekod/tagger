@@ -19,29 +19,33 @@ db._.id = '_id'
 
 // Set some defaults
 db.defaults({
-        illust: []
-    })
-    .write()
+    illust: []
+  })
+  .write()
 
 function getById(id) {
-    let res = db.get('illust').getById(id).value()
-    console.log(db.get('illust').value())
-    console.log('getById', id, res)
-    return res
+  let res = db.get('illust').getById(id).value()
+  return res
 }
 
 export default {
-    save(illusts) {
-        // let col = db.get('illust')
-        _(illusts).forEach((i)=>{
-          db.get('illust').push(i).write()
-        })
-        // col.write()
-    },
-    getById(param, send) {
-        send({
-            data: getById(param.id),
-            status: 1
-        })
-    }
+  save(illusts) {
+    _(illusts).forEach((i) => {
+      if (i.source && i.sourceId) {
+        let existed = db.get('illust').find({
+          source: i.source,
+          sourceId: i.sourceId
+        }).value()
+        //console.log('existed', i.source, i.sourceId)
+        if (existed) return
+      }
+      db.get('illust').push(i).write()
+    })
+  },
+  getById(param, send) {
+    send({
+      data: getById(param.id),
+      status: 1
+    })
+  }
 }

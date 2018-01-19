@@ -20,7 +20,7 @@ function mIsDirOrMkdir(path){
     if (mExists(path)) {
         return fs.statSync(path).isDirectory()
     } else {
-        return fs.mkdirSync(path)
+        return !fs.mkdirSync(path)
     }
 }
 

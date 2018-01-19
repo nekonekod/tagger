@@ -2,7 +2,7 @@ const _ = require('lodash')
 const fs = require('fs')
 const path = require('path')
 
-const suffix = ['jpg','png','jpeg','gif']
+const suffix = ['jpg', 'png', 'jpeg', 'gif']
 
 function mExists(path) {
     return fs.existsSync(path)
@@ -16,7 +16,7 @@ function mIsDir(path) {
     return mExists(path) && fs.statSync(path).isDirectory()
 }
 
-function mIsDirOrMkdir(path){
+function mIsDirOrMkdir(path) {
     if (mExists(path)) {
         return fs.statSync(path).isDirectory()
     } else {
@@ -77,6 +77,8 @@ function doRenamePixivImageFiles(dir, dupDir, cb) {
             let err = fs.renameSync(f.fPath, newPath)
             if (err) {
                 throw new Error('重命名失败：', f.fPath, newPath, err)
+            } else {
+                console.log('rename:', f.fPath, 'to', newPath)
             }
         }
     }, true);

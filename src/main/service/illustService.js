@@ -28,10 +28,27 @@ function getById(id) {
 }
 
 function mQuery(expl) {
-   //FIXME 需要改 模糊匹配
-    let res = db.get('illust').find(expl).value()
+    //TODO 需要改 模糊匹配
+    let res = db.get('illust').filter(illust => {
+        return (!expl._id || illust._id === expl._id) &&
+            (!expl.source || illust.source === expl.source) &&
+            (!expl.sourceId || illust.sourceId === expl.sourceId) &&
+            (!expl.author || illust.author === expl.author) &&
+            (!expl.authorId || illust.authorId === expl.authorId) &&
+            vagueMatchTag(illust.tags, expl.tags) &&
+            (!expl.comment || illust.comment === expl.comment) &&
+            (!expl.title || illust.title === expl.title) &&
+            (!expl.fav || illust.fav === expl.fav)
+    }).value()
     console.log(res)
     return res
+}
+
+function vagueMatchTag(tagsArr, explTags) {
+    return explTags && tagsArr && _(explTags).filter(t => {
+        let tmp = _(tagsArr).filter(t2 => t2.indexOf(t) > -1).value()
+        return tmp.length > 0
+    }).value().length > 0
 }
 
 export default {

@@ -8,6 +8,8 @@ import fsUtil from '../common/fsUtil'
 import tagService from './tagService'
 import illustService from './illustService'
 
+import Illust from '../model/illust'
+
 const source = 'pixiv'
 const limit = 5
 const cleanDirty = true
@@ -37,7 +39,8 @@ function parseAndSave(json) {
 //raw data => illust 
 function doParse(rawModel, callback) {
     if (cleanDirty) cleanDirtyRaw(rawModel)
-    let illust = {
+
+    let illust = new Illust({
         _id: uuid(),
         source: source,
         sourceId: rawModel.id,
@@ -48,7 +51,7 @@ function doParse(rawModel, callback) {
         comment: null,
         title: rawModel.title,
         fav: 0
-    }
+    })
     callback(null, illust)
 }
 

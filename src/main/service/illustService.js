@@ -19,33 +19,42 @@ db._.id = '_id'
 
 // Set some defaults
 db.defaults({
-    illust: []
-  })
-  .write()
+        illust: []
+    })
+    .write()
 
 function getById(id) {
-  let res = db.get('illust').getById(id).value()
-  return res
+    return db.get('illust').getById(id).value()
+}
+
+function mQuery(expl) {
+   //FIXME 需要改 模糊匹配
+    let res = db.get('illust').find(expl).value()
+    console.log(res)
+    return res
 }
 
 export default {
-  save(illusts) {
-    _(illusts).forEach((i) => {
-      if (i.source && i.sourceId) {
-        let existed = db.get('illust').find({
-          source: i.source,
-          sourceId: i.sourceId
-        }).value()
-        //console.log('existed', i.source, i.sourceId)
-        if (existed) return
-      }
-      db.get('illust').push(i).write()
-    })
-  },
-  getById(param, send) {
-    send({
-      data: getById(param.id),
-      status: 1
-    })
-  }
+    save(illusts) {
+        _(illusts).forEach((i) => {
+            if (i.source && i.sourceId) {
+                let existed = db.get('illust').find({
+                    source: i.source,
+                    sourceId: i.sourceId
+                }).value()
+                //console.log('existed', i.source, i.sourceId)
+                if (existed) return
+            }
+            db.get('illust').push(i).write()
+        })
+    },
+    getById(param, send) {
+        send({
+            data: getById(param.id),
+            status: 1
+        })
+    },
+    query(param, send) {
+        send({ data: mQuery(param), status: 1 })
+    }
 }

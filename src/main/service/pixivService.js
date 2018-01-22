@@ -103,7 +103,6 @@ function doRenamePixivImageFiles(dir, dupDir, cb) {
                 console.warn('file dup exists:', f.fPath, 'try do be ', newPath, 'but already existed')
                 newPath = path.join(dupDir, f.fName)
             }
-            console.log('newPath exists:', fsUtil.exists(newPath))
             let err = fs.renameSync(f.fPath, newPath)
             if (err) {
                 throw new Error('重命名失败：', f.fPath, newPath, err)

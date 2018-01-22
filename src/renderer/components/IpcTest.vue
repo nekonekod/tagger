@@ -30,8 +30,8 @@
     name: 'landing-page',
     data (){
       return {
-        channel:'pixiv/rename',
-        param:'{"dir":"/Users/nekod/Downloads/test/facades","dupDir":"/Users/nekod/Downloads/test/dup"}',
+        channel:'illust/query',
+        param:'{"tags":["Верный"]}',
         data:''
       }
     },

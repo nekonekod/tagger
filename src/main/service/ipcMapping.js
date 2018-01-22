@@ -11,6 +11,7 @@ ipcM.on('fs/watch/register', fsService.register)
 // ipcM.on('fs/watch/unregister', fsService.unregister)
 ipcM.on('fs/watch/watchedDirs', fsService.watchedDirs)
 ipcM.on('illust/getById', illustService.getById)
+ipcM.on('illust/query', illustService.query)
 
 export default{
     init(appRef){

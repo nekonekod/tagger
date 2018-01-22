@@ -4,14 +4,14 @@ const separator = '$'
 
 function reMapTags() {
   let map = new Map()
-  map.set('艦これかっこいい', '艦これ')
-  map.set('響', '响')
+  // map.set('艦これかっこいい', '艦これ')
+  // map.set('響', '响')
   return map
 }
 
 function ignoreTags() {
   let set = new Set()
-  set.add('艦これ1000users入り')
+  // set.add('艦これ1000users入り')
   return set
 }
 

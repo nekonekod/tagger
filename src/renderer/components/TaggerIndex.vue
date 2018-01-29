@@ -9,7 +9,7 @@
         <br>
         <div class="doc">
           <div class="title">Detail</div>
-          <pre v-html="watched"></pre>
+          <pre class="watched" v-html="watched"></pre>
         </div>
       </div>
 
@@ -204,7 +204,7 @@ main > div {
   background-color: transparent;
 }
 
-pre {
+.watched {
   width: 30vw;
   overflow: scroll;
 }

@@ -1,23 +1,22 @@
 <template>
   <div id="wrapper">
-    <main>
+  <main>
       <div class="left-side">
         <span class="title">
-          IPC TEST
+          <router-link :to="{ name: 'tagger-index'}">IPC TEST</router-link>
         </span>
         <div class="doc">
           <input v-model="channel"/>
           <input v-model="param"/>
-          <br>
           <button @click="send">Send</button>
+          <br>
+          <br>
+        </div>
+        <div class="doc">
+          <pre class="res" v-html="data"></pre>
         </div>
       </div>
 
-      <div class="right-side">
-        <div class="doc">
-          <pre v-html="data"></pre>
-        </div>
-      </div>
     </main>
   </div>
 </template>
@@ -128,8 +127,9 @@
     background-color: transparent;
   }
 
-  pre {
-    width: 30vw;
+  .res {
+    width: 80vw;
+    height: 80vw;
     overflow:scroll;
   }
 </style>

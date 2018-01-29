@@ -30,8 +30,8 @@
     name: 'landing-page',
     data (){
       return {
-        channel:'illust/query',
-        param:'{"tags":["Верный"]}',
+        channel:'tFile/query',
+        param:'{"tags":["艦これ"]}',
         data:''
       }
     },

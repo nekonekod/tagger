@@ -4,7 +4,8 @@ import lodashId from 'lodash-id'
 import FileSync from 'lowdb/adapters/FileSync'
 import path from 'path'
 
-console.log(__dirname)
+const TAG = 'illustService'
+
 const dbPath = path.join(__dirname, '../data', 'tagger.db')
 const adapter = new FileSync(dbPath)
 const db = lowdb(adapter)
@@ -27,20 +28,19 @@ function getById(id) {
     return db.get('illust').getById(id).value()
 }
 
-function mQuery(expl) {
+function mQuery(queryParam) {
     //TODO 需要改 模糊匹配
     let res = db.get('illust').filter(illust => {
-        return (!expl._id || illust._id === expl._id) &&
-            (!expl.source || illust.source === expl.source) &&
-            (!expl.sourceId || illust.sourceId === expl.sourceId) &&
-            (!expl.author || illust.author === expl.author) &&
-            (!expl.authorId || illust.authorId === expl.authorId) &&
-            vagueMatchTag(illust.tags, expl.tags) &&
-            (!expl.comment || illust.comment === expl.comment) &&
-            (!expl.title || illust.title === expl.title) &&
-            (!expl.fav || illust.fav === expl.fav)
+        return (!queryParam._id || illust._id === queryParam._id) &&
+            (!queryParam.source || illust.source === queryParam.source) &&
+            (!queryParam.sourceId || illust.sourceId === queryParam.sourceId) &&
+            (!queryParam.author || illust.author === queryParam.author) &&
+            (!queryParam.authorId || illust.authorId === queryParam.authorId) &&
+            vagueMatchTag(illust.tags, queryParam.tags) &&
+            (!queryParam.comment || illust.comment === queryParam.comment) &&
+            (!queryParam.title || illust.title === queryParam.title) &&
+            ((!queryParam.minFav && !queryParam.maxFax) || (illust.fav >= queryParam.minFav) && (illust.fav <= queryParam.maxFav))
     }).value()
-    console.log(res)
     return res
 }
 
@@ -65,13 +65,21 @@ export default {
             db.get('illust').push(i).write()
         })
     },
-    getById(param, send) {
+    ipcGetById(param, send) {
         send({
             data: getById(param.id),
             status: 1
         })
     },
-    query(param, send) {
-        send({ data: mQuery(param), status: 1 })
+    /**
+     * query illust from db
+     * @param {IllustQueryParam.js} queryParam 
+     * @param send 
+     */
+    query(queryParam) {
+        return mQuery(queryParam)
+    },
+    queryAll() {
+        return db.get('illust').value()
     }
 }

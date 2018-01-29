@@ -1,14 +1,17 @@
 import chokidar from 'chokidar'
 import ipcM from '../common/ipcM'
 import _ from 'lodash'
+import path from 'path'
+import fsUtil from './fsUtil'
 
+const TAG = 'fswatcher'
 let log = console.log.bind(console)
 
 let watcher = chokidar.watch([], {
     ignored: /(^|[\/\\])\../,
     persistent: true,
-    disableGlobbing:true,
-    followSymlinks:false
+    disableGlobbing: true,
+    followSymlinks: false
 });
 
 let ignoredDirs = []
@@ -49,5 +52,30 @@ export default {
     // },
     watchedDirs() {
         return watchedDirs()
+    },
+    matchAndMap(src, keyGenFun, orElseFun, mapperFun, fileFilter) {
+        if (!src || src.length === 0) return []
+        let dirAndFiles = watcher.getWatched()
+        // log(TAG,dirAndFiles)
+        // return []
+        let rest = _.map(dirAndFiles, (files, dir) => {
+            // log(TAG, dir, files)
+            return _(files).filter((f) => {
+                return fileFilter ? fileFilter(dir, f) : true
+            }).map((f) => {
+                let fPath = path.join(dir, f)
+                //match src name
+                let isFile = fsUtil.isFile(fPath)
+                if (!isFile) return null //not a file
+                let found = _(src).find((s) => {
+                    let key = keyGenFun(s) //fName from param
+                    // console.log(TAG, f, key)
+                    return f.indexOf(key) > -1
+                })
+                // console.log(TAG, fPath, found)
+                return found ? mapperFun(dir, f, found) : orElseFun(dir, f)
+            }).filter((o) => o).value()
+        })
+        return _.flatten(rest)
     }
 }

@@ -134,14 +134,14 @@ function doRenamePixivImageFiles(dir, dupDir, cb) {
 // }
 
 export default {
-    importRaw(param, send) {
+    ipcImportRaw(param, send) {
         doImport(param.path, () => {
             send({
                 status: 1
             })
         })
     },
-    renamePixivImageFiles(param, send) {
+    ipcRenamePixivImageFiles(param, send) {
         doRenamePixivImageFiles(param.dir, param.dupDir, send)
     }
 }

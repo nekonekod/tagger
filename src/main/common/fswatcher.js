@@ -3,6 +3,7 @@ import ipcM from '../common/ipcM'
 import _ from 'lodash'
 import path from 'path'
 import fsUtil from './fsUtil'
+import async from 'async'
 
 const TAG = 'fswatcher'
 let log = console.log.bind(console)
@@ -11,23 +12,24 @@ let watcher = chokidar.watch([], {
     ignored: /(^|[\/\\])\../,
     persistent: true,
     disableGlobbing: true,
-    followSymlinks: false
+    followSymlinks: false,
+    depth:0
 });
 
 let ignoredDirs = []
 
 watcher.on('addDir', path => {
         pushWatchedDirs()
-        log(`Directory ${path} has been added`)
+        // log(`Directory ${path} has been added`)
     })
     .on('unlinkDir', path => {
         pushWatchedDirs()
-        log(`Directory ${path} has been removed`)
+        // log(`Directory ${path} has been removed`)
     })
     .on('error', error => log(`Watcher error: ${error}`))
     .on('ready', () => log('Initial scan complete. Ready for changes'))
     .on('raw', (event, path, details) => {
-        log('Raw event info:', event, path, details);
+        // log('Raw event info:', event, path, details);
     });
 
 let pushWatchedDirs = _.debounce(() => {
@@ -44,7 +46,9 @@ function watchedDirs() {
 
 export default {
     register(path) {
-        watcher.add(path)
+        async.series([(cb)=>{
+            watcher.add(path)
+        }])
     },
     // unregister(path) {
     //     log('unwatch:', path)

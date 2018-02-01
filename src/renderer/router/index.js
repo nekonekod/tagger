@@ -4,20 +4,28 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
-      path: '/ipcTest',
-      name: 'ipc-test',
-      component: require('@/components/IpcTest').default
-    },
-    {
-      path: '/',
-      name: 'tagger-index',
-      component: require('@/components/TaggerIndex').default
-    },
-    {
-      path: '*',
-      redirect: '/'
-    }
-  ]
+    routes: [{
+            path: '/ipcTest',
+            name: 'ipc-test',
+            component: require('@/components/IpcTest').default
+        },
+        {
+            path: '/taggerIndex',
+            name: 'tagger-index',
+            component: require('@/components/TaggerIndex').default
+        },
+        {
+            path: '/',
+            // name: 'landing-page',
+            component: require('@/components/LandingPage').default,
+            children: [{
+                path: '',
+                component: require('@/components/MainPage/ImgList').default,
+            }]
+        },
+        {
+            path: '*',
+            redirect: '/'
+        }
+    ]
 })

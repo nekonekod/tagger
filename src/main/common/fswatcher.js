@@ -13,18 +13,18 @@ let watcher = chokidar.watch([], {
     persistent: true,
     disableGlobbing: true,
     followSymlinks: false,
-    depth:0
+    depth: 0
 });
 
 let ignoredDirs = []
 
 watcher.on('addDir', path => {
         pushWatchedDirs()
-        // log(`Directory ${path} has been added`)
+        log(`Directory ${path} has been added`)
     })
     .on('unlinkDir', path => {
         pushWatchedDirs()
-        // log(`Directory ${path} has been removed`)
+        log(`Directory ${path} has been removed`)
     })
     .on('error', error => log(`Watcher error: ${error}`))
     .on('ready', () => log('Initial scan complete. Ready for changes'))
@@ -46,9 +46,7 @@ function watchedDirs() {
 
 export default {
     register(path) {
-        async.series([(cb)=>{
-            watcher.add(path)
-        }])
+        watcher.add(path)
     },
     // unregister(path) {
     //     log('unwatch:', path)

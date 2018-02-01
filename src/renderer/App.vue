@@ -5,11 +5,11 @@
 </template>
 
 <script>
-  export default {
-    name: 'tagger'
-  }
+export default {
+  name: 'tagger'
+}
 </script>
 
 <style>
-  /* CSS */
+/* CSS */
 </style>

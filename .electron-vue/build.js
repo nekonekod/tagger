@@ -115,8 +115,8 @@ function greeting () {
   const cols = process.stdout.columns
   let text = ''
 
-  if (cols > 85) text = 'tagger-build'
-  else if (cols > 60) text = 'tagger-|build'
+  if (cols > 85) text = 'electron-vue'
+  else if (cols > 60) text = 'electron-|vue'
   else text = false
 
   if (text && !isCI) {

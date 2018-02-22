@@ -20,7 +20,7 @@ export default new Router({
             component: require('@/components/LandingPage').default,
             children: [{
                 path: '',
-                component: require('@/components/MainPage/ImgList').default,
+                component: require('@/components/LandingPage/ImgList').default,
             }]
         },
         {
